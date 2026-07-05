@@ -18,13 +18,13 @@ Tokens live in `.env` (already filled in from tokens.txt).
 
 ## Commands
 
-The bot only operates in the **#ask_poseidon** channel (change with
+The bot only operates in the **#ask-poseidon** channel (change with
 `SUPPORT_CHANNEL` in `.env` — a channel name or ID). DMs always work.
 
 | Command | Who | What |
 |---|---|---|
 | `/ask <question>` | everyone | Ask a question, answered from the knowledge base |
-| @mention the bot in #ask_poseidon, or DM it | everyone | Same as /ask |
+| @mention the bot in #ask-poseidon, or DM it | everyone | Same as /ask |
 | `/kb upload <file>` | admins (Manage Server) | Add a `.txt`/`.md` file to the knowledge base |
 | `/kb text <name> <content>` | admins | Add/append a short snippet without a file |
 | `/kb list` | admins | Show what's in the knowledge base |
