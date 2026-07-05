@@ -54,7 +54,7 @@ ENV = load_env()
 DISCORD_TOKEN = ENV.get("DISCORD_TOKEN", "")
 GROQ_API_KEY = ENV.get("GROQ_API_KEY", "")
 GROQ_MODEL = ENV.get("GROQ_MODEL", "llama-3.3-70b-versatile")
-SUPPORT_CHANNEL = ENV.get("SUPPORT_CHANNEL", "clash-of-clans-support").lower()
+SUPPORT_CHANNEL = ENV.get("SUPPORT_CHANNEL", "ask_poseidon").lower()
 
 if not DISCORD_TOKEN or not GROQ_API_KEY:
     print("Missing DISCORD_TOKEN or GROQ_API_KEY in .env — fill them in and restart.")

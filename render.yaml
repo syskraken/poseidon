@@ -15,4 +15,4 @@ services:
       - key: GROQ_MODEL
         value: llama-3.3-70b-versatile
       - key: SUPPORT_CHANNEL
-        value: clash-of-clans-support
+        value: ask_poseidon
