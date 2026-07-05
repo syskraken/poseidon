@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(python -m pip install -U discord.py)",
+      "PowerShell(python -c \"import ast; ast.parse\\(open\\('bot.py', encoding='utf-8'\\).read\\(\\)\\); print\\('syntax OK'\\)\")",
+      "Bash(python -)",
+      "PowerShell(python bot.py)",
+      "PowerShell(Remove-Item \"D:\\\\Clash of Clans\\\\poseidon\\\\knowledge\\\\coc-bot-basics.txt\" -Confirm:$false)",
+      "Bash(curl -s -o /dev/null http://127.0.0.1:8080/health)",
+      "Bash(curl -sI -X HEAD http://127.0.0.1:8080/)",
+      "Bash(curl -s http://127.0.0.1:8080/health)"
+    ]
+  }
+}

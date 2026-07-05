@@ -1,0 +1,37 @@
+KRAKEN PRIME — WHAT THE BOT DOES WHILE FARMING
+
+When you press START BOT, the bot repeats this raid loop forever until stopped:
+
+1. Dismiss popups on the home screen (okay buttons, and it even opens the free
+   Blacksmith chest if one appears).
+2. Tap the Attack button, then "Find a Match", then confirm the attack.
+3. Scout the base: it reads the available GOLD using OCR. If the gold is below
+   your Minimum Gold Target it taps Next and checks the following base — up to
+   20 skips, then it attacks whatever comes next.
+4. Lightning phase: it scans the base for air defenses and drops your
+   configured lightning spells on them (e.g. 4 per air defense).
+5. Deploy troops at your pinned deploy points, spreading taps across all
+   points, then deploys heroes (one tap each).
+6. Rage phase: waits your configured Rage Delay, then drops rage spells one by
+   one on your pinned rage points.
+7. Waits for the battle to end (taps the fast-forward button when it appears,
+   then Return Home / claim reward, and clears all post-battle popups). A
+   battle is given up to 10 minutes before it is considered stuck.
+8. Waits a few seconds for troops to retrain, then starts the next raid.
+
+The Dashboard counts every raid ("TOTAL RAIDS") and shows uptime and live logs.
+Raid History lists each raid with its start time.
+
+Self-recovery: if the Attack button cannot be found (game frozen, disconnected,
+"village is under attack" screens, etc.), the bot force-closes Clash of Clans
+through ADB, relaunches it, waits 30 seconds for it to load, clears popups and
+continues farming on its own. Screenshot failures automatically trigger an ADB
+reconnect and retry.
+
+Important expectations:
+- The emulator window must stay open. Don't play in it while the bot runs.
+- The bot taps blind coordinates for deployment, so if you change your army
+  composition (different number of troop types, added/removed heroes or
+  spells), re-pin your troop bar slots or the wrong slots will be selected.
+- Attack strategy is simple mass-deploy farming (e.g. mass dragons). It is
+  built for loot farming, not for 3-star pushing.

@@ -1,0 +1,63 @@
+KRAKEN PRIME — CONFIGURATION AND GUIDED SETUP
+
+The Configuration page has these settings:
+
+Troops & Heroes:
+- Troop Slot Icons: how many DIFFERENT troop types are in your army bar
+  (e.g. if you only bring Dragons, answer 1).
+- Total Troops to Deploy: total number of troops dropped per attack
+  (e.g. 10 Dragons = 10).
+- Number of Heroes: how many heroes to deploy (0 if none). Heroes get one tap
+  each at the first deploy point.
+
+Spells & Strategy:
+- Lightning Spells / Spells per Air Defense: the bot can automatically detect
+  air defenses on the enemy base (template matching) and drop lightning spells
+  on them — e.g. 8 spells, 4 per air defense.
+- Number of Rage Spells: set 0 if you bring none. Setting a number above 0
+  automatically enables the rage phase.
+- Rage Delay (sec): how many seconds to wait after troops deploy before the
+  rage spells are dropped (default 10) — gives troops time to walk into position.
+
+Loot & Targets:
+- Minimum Gold Target: the bot skips bases with less gold than this
+  (default 200000). It skips up to 20 bases; after 20 skips it attacks the
+  next base anyway.
+
+After changing anything, click SAVE ALL SETTINGS.
+
+GUIDED SETUP (one-time, required before first start):
+Configuration -> Advanced -> RUN FULL GUIDED SETUP.
+The bot enters a real battle (no troops are deployed automatically) and opens a
+visual planner window three times so you can pin coordinates by clicking on a
+screenshot:
+1. Pin your TROOP BAR slots — click each icon in the bottom bar, in this exact
+   order: troops first, then heroes, then the lightning spell slot, then the
+   rage spell slot. The order matters!
+2. Pin DEPLOY POINTS — click the spots on the map where troops should drop.
+3. Pin RAGE POINTS (only if you have rage spells) — one point per rage spell.
+In each planner window click "Save & Close" when done. The setup battle is then
+ended automatically and the sidebar shows "SETUP COMPLETE - READY TO FARM!".
+Now the START BOT button works.
+
+You can re-pin any of these later without redoing the whole setup:
+Configuration -> Advanced -> EDIT PIN TROOP BAR SLOTS / EDIT DEPLOY POINTS /
+EDIT RAGE POINTS.
+
+DEPLOYMENT PRESETS (optional, advanced):
+Enable "preset mode" in Configuration to save up to 4 different deployment
+plans (deploy points + matching rage points per preset). Deployment mode:
+- sequence: raid 1 uses preset 1, raid 2 uses preset 2, ... and cycles
+- random: a random preset is picked each raid
+Use "Add deployment preset" to pin a new one; each preset can be edited or
+deleted from the list. The Live Preview draws every preset in a different
+color, and once the bot is running it shows only the preset currently in use.
+
+RESETTING:
+"Reset Deployment Points" (Configuration, red button at the bottom) deletes
+config.json and all pinned point files. You must run the full guided setup
+again afterward. Stop the bot before resetting.
+
+Where settings are stored (next to KrakenPrime.exe):
+config.json (settings), troop_slots.json, deploy_points.json, rage_points.json,
+deploy_preset_1..4.json, rage_preset_1..4.json.

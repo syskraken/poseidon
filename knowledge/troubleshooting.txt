@@ -1,0 +1,69 @@
+KRAKEN PRIME — TROUBLESHOOTING / FAQ
+
+"Could not connect to LDPlayer" or the Live Preview shows a connection warning:
+- Make sure LDPlayer is running with Clash of Clans open.
+- In LDPlayer settings -> Others tab, ADB Debugging must be set to
+  "Enable local connection". Restart LDPlayer after enabling it.
+- The bot connects to ADB at 127.0.0.1:5555. If another emulator or program
+  uses ADB at the same time it can conflict — close other emulators.
+
+"ADB not found":
+- Re-run setup.bat, or make sure adb.exe is in the same folder as
+  KrakenPrime.exe. The bot also keeps a copy in
+  %LOCALAPPDATA%\KrakenPrime\adb.
+
+"Tesseract OCR not found":
+- Re-run setup.bat, or install Tesseract manually from
+  https://github.com/UB-Mannheim/tesseract/wiki and keep the DEFAULT install
+  path (C:\Program Files\Tesseract-OCR).
+
+Package install failed during setup / bot won't start from source:
+- The bot requires Python 3.11 exactly. Check with: python --version
+  If you have a different version (3.12, 3.13...), run setup.bat — it installs
+  Python 3.11 side by side and uses it automatically.
+
+The bot can't find the Attack button / seems stuck:
+- The emulator resolution MUST be 1600x900 at 240 DPI (LDPlayer settings ->
+  Display tab). Any other resolution breaks button detection.
+- Make sure the game is on the home village screen when you start the bot.
+- The bot recovers on its own: after 30 seconds of not finding the Attack
+  button it restarts Clash of Clans and continues.
+
+Gold reading seems wrong / bot attacks low-loot bases:
+- The gold OCR needs the 1600x900 (240 DPI) resolution to line up. Check the
+  debug image debug_gold_roi.png (saved next to the exe) — it shows exactly
+  what the bot read.
+- After 20 skipped bases in a row the bot attacks the next base regardless of
+  loot. That is intended behavior, not a bug.
+
+Wrong troops/spells being selected during attacks:
+- Your pinned troop bar slots no longer match your army. Re-pin them:
+  Configuration -> Advanced -> EDIT PIN TROOP BAR SLOTS. Pin in the exact
+  order: troop icons, then heroes, then lightning slot, then rage slot.
+
+START BOT button shows a "Setup Required" warning:
+- You must complete the one-time guided setup first: fill in the Configuration
+  fields, SAVE ALL SETTINGS, then RUN FULL GUIDED SETUP (Configuration ->
+  Advanced). The button stays gray until setup is complete.
+
+Lightning spells are not being dropped:
+- Set both "Lightning Spells" and "Spells per Air Defense" in Configuration,
+  and make sure the lightning slot was pinned during troop bar setup.
+- If no air defense is detected on a base, the lightning phase is skipped for
+  that raid (this is normal).
+
+Rage spells are not being dropped:
+- "Number of Rage Spells" must be above 0, rage points must be pinned, and the
+  rage slot must be pinned in the troop bar (last position, after lightning).
+
+Debug files (saved next to KrakenPrime.exe) that help diagnose problems:
+- debug_gold_roi.png — what the OCR saw when reading gold
+- debug_battle_screen.png — the battle screen right after scouting
+- debug_ad_positions.png — detected air defenses circled in red
+
+Is my account safe? Kraken Prime automates gameplay through an emulator.
+Using ANY bot violates Supercell's Terms of Service and carries a ban risk —
+use it at your own risk on accounts you can afford to lose.
+
+Still stuck? Join the Discord for help: https://discord.gg/jV7ymDtH7F
+You can also open an issue on GitHub: https://github.com/syskraken/krakenprime

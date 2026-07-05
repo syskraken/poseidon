@@ -1,0 +1,44 @@
+KRAKEN PRIME — OVERVIEW
+
+Kraken Prime is a free Clash of Clans farming bot for Windows. It plays the game
+inside the LDPlayer Android emulator and automatically farms loot for you: it
+searches for bases, checks the available gold, attacks with your army, drops
+spells, waits for the battle to finish, and repeats — forever, until you stop it.
+
+How it works under the hood:
+- It controls the emulator through ADB (Android Debug Bridge) on 127.0.0.1:5555,
+  sending taps and swipes like a real finger.
+- It "sees" the screen using OpenCV template matching (it recognizes buttons like
+  Attack, Find a Match, Return Home from reference images).
+- It reads the gold amount of an enemy base using Tesseract OCR.
+
+The bot has a modern dark-themed desktop app (KRAKEN PRIME window) with:
+- Dashboard: total raids counter, uptime, and live system logs
+- Configuration: army settings, loot filter, deployment presets, guided setup
+- Live Preview: a live screenshot of the emulator with your pinned points drawn
+  on top (troop slots, deploy points, rage points)
+- Raid History: a timestamped list of started raids
+- Donation page for supporting the developer
+
+Requirements:
+- Windows PC
+- LDPlayer emulator with Clash of Clans installed
+- Emulator resolution MUST be 1600x900 with 240 DPI
+- ADB local connection enabled in LDPlayer settings
+- Python 3.11 (setup.bat installs it automatically)
+
+Official links:
+- Download / source code: https://github.com/syskraken/krakenprime
+- Discord server: https://discord.gg/jV7ymDtH7F
+- Video tutorial: https://www.youtube.com/watch?v=3THrihH-oIM
+
+Price: Kraken Prime is free. If it has been useful, you can support the
+developer with a donation (see the Donation page in the app):
+- Ko-fi: https://ko-fi.com/franklinmarshall
+- PayPal: https://www.paypal.com/paypalme/FranklinTripole
+- GCash: 09271272799 (Franklin Tripole)
+- Contact email: nzeus624@gmail.com
+
+Privacy note: the app sends a tiny anonymous heartbeat (a random ID only, no
+personal data, no game data) so the developer can see how many installs are
+active. Privacy policy: https://kraken.protectiva.site/privacy

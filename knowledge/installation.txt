@@ -1,0 +1,37 @@
+KRAKEN PRIME — INSTALLATION GUIDE
+
+Step 1 — Get the files.
+Option A (terminal): git clone https://github.com/syskraken/krakenprime.git
+then cd krakenprime.
+Option B (zip): download the repository as a zip from GitHub and extract it.
+
+Step 2 — Run setup.bat.
+This installs everything the bot needs, automatically:
+- Python 3.11 (the bot requires exactly Python 3.11 — newer versions like 3.12+
+  will NOT work)
+- Python packages: customtkinter, opencv-python, numpy, Pillow, pytesseract,
+  requests, certifi
+- Tesseract OCR (used to read gold amounts on screen). A bundled installer is
+  included; keep the DEFAULT install path if the manual installer opens.
+- ADB (Android Debug Bridge) — downloaded into the bot folder if missing.
+setup.bat needs an internet connection.
+
+Step 3 — Run build.bat.
+This compiles the bot into a standalone KrakenPrime.exe.
+
+Step 4 — Start the bot.
+Go to the dist folder and run KrakenPrime.exe.
+(If you are running from source instead, run.bat starts the GUI directly.)
+
+Step 5 — Configure LDPlayer (REQUIRED, the bot will not work without this):
+1. Open LDPlayer settings -> Display tab -> set resolution to 1600x900 (240 DPI).
+2. Settings -> Others tab -> set "ADB Debugging" to "Enable local connection".
+3. Restart LDPlayer after changing these settings.
+
+Step 6 — First launch.
+Open Clash of Clans in LDPlayer, stay on your home village screen, then open
+KRAKEN PRIME, fill in the Configuration page, and run the guided setup
+(Configuration -> Advanced -> RUN FULL GUIDED SETUP).
+
+Video walkthrough of the whole install:
+https://www.youtube.com/watch?v=3THrihH-oIM

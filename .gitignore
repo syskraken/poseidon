@@ -1,0 +1,6 @@
+# never commit secrets
+.env
+tokens.txt
+
+__pycache__/
+*.pyc
