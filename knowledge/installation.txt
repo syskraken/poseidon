@@ -1,5 +1,17 @@
 KRAKEN PRIME — INSTALLATION GUIDE
 
+Step 0 — Install LDPlayer and Clash of Clans (required before anything else).
+1. Download LDPlayer (free Android emulator) from the official site:
+   https://www.ldplayer.net — click Download and run the installer.
+2. Open LDPlayer, sign in to the Google Play Store with a Google account, and
+   install Clash of Clans from the Play Store inside the emulator.
+3. Open Clash of Clans once and log in to the account you want to farm on
+   (link it via Supercell ID so you don't lose progress).
+4. Configure LDPlayer for the bot (it will NOT work without this):
+   - Settings -> Display tab: resolution 1600x900, DPI 240
+   - Settings -> Others tab: ADB Debugging = "Enable local connection"
+   - Save and restart LDPlayer.
+
 Step 1 — Get the files.
 Option A (terminal): git clone https://github.com/syskraken/krakenprime.git
 then cd krakenprime.
