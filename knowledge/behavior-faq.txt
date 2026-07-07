@@ -1,0 +1,82 @@
+KRAKEN PRIME — BEHAVIOR DETAILS & FREQUENTLY ASKED QUESTIONS
+
+Q: Does the bot automatically end the battle when all my troops die?
+A: No. There is no feature that detects your troops dying. The bot waits for
+Clash of Clans' own end-of-battle screen to appear (the Return Home / claim
+reward buttons), tapping the fast-forward button whenever it shows up to speed
+the battle along, with a 10-minute safety timeout. When all your troops die,
+Clash of Clans ends the battle by itself and shows the results screen — the bot
+then taps Return Home and moves on. So it does return home shortly after your
+troops are gone, but because the game ended the battle, not because the bot
+counts troops. It will not surrender/end early on its own while troops are
+still alive.
+
+Q: The camera moves on its own during an attack — is something wrong? Is it ADB?
+A: That is normal and intentional. The bot sends an ADB swipe (a 45-degree
+diagonal "center screen" swipe) to center and frame the enemy base before it
+deploys troops. This makes sure the base lines up with your pinned deploy
+points. You'll see it swipe right after it picks a base to attack and again
+just before deploying. It is not a bug and not a problem with ADB — it's the
+bot positioning the camera.
+
+Q: Can I run the bot on my Android phone or tablet? Does it work on Mac?
+A: No. Kraken Prime is a Windows PC application. It runs Clash of Clans inside
+the LDPlayer emulator on your computer and controls it through ADB. It cannot
+be installed on an Android phone or tablet to farm directly on the device, and
+it is not a mobile app. It is built and tested for Windows only (it installs
+Python 3.11, Tesseract, and ADB for Windows). You need a Windows PC with
+LDPlayer set to 1600x900 at 240 DPI. It does not officially support macOS or
+Linux.
+
+Q: What about running it on a Mac with BlueStacks (or any emulator)?
+A: No — this does not work. The emulator is not the problem; the Kraken Prime
+program itself is Windows-only software. Even though BlueStacks and LDPlayer
+have Mac versions, the bot ships as a Windows application and installs
+Windows-only Python, ADB, and Tesseract, so it cannot run on macOS no matter
+which emulator you use. To run Kraken Prime on a Mac you would need Windows
+itself (for example via Boot Camp on an Intel Mac, or a Windows virtual
+machine), and then LDPlayer inside that Windows — a heavy setup that is not
+officially supported or recommended.
+
+Q: Can the bot request/donate troops, do Clan Wars, or Clan Capital?
+A: No. Kraken Prime is a multiplayer loot-farming bot only. It attacks random
+multiplayer bases for gold/elixir. It does not do war attacks, clan capital,
+donations, or clan games.
+
+Q: Does the bot upgrade buildings or train specific troops for me?
+A: No. It does not manage your village, buildings, or army composition. It
+retrains whatever army you already have (via the game's quick-train after each
+raid) and deploys it. You choose the army; the bot just farms with it.
+
+Q: Does Kraken Prime work with BlueStacks or other Android emulators?
+A: Kraken Prime is built and tested for LDPlayer only. It connects via ADB to
+127.0.0.1:5555 and relies on button templates, OCR, and timing tuned for
+LDPlayer's rendering. BlueStacks or other emulators like MEmu might work if
+they are set to the exact same resolution (1600x900 @ 240 DPI) and have ADB
+enabled locally on port 5555, but button detection and gold reading may fail
+or behave unpredictably because the UI renders differently across emulators.
+Use LDPlayer for best results; other emulators are not officially supported.
+
+Q: Can I run more than one account / emulator at once?
+A: The bot connects to a single emulator at ADB 127.0.0.1:5555. It is built to
+run one LDPlayer instance at a time. Running multiple emulators sharing ADB can
+cause conflicts.
+
+Q: Can I use my computer while the bot runs?
+A: You can use your PC, but leave the LDPlayer emulator window open and don't
+play inside it while the bot is running — the bot is tapping and swiping there.
+
+Q: How does the bot decide which base to attack?
+A: It reads the enemy's available gold with OCR and skips bases below your
+Minimum Gold Target. After 20 skips in a row it attacks the next base anyway.
+It only filters on gold (not elixir or dark elixir).
+
+Q: Does it need the game in English?
+A: The bot recognizes buttons by image, not text (except reading the gold
+number), so button detection is language-independent. The gold OCR reads
+digits only, so that is language-independent too.
+
+Q: Is my account safe from bans?
+A: Automating gameplay with any bot violates Supercell's Terms of Service and
+carries a ban risk. Use it at your own risk, ideally on an account you can
+afford to lose.

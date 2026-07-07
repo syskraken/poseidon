@@ -29,7 +29,6 @@ Requirements:
 
 Official links:
 - Download / source code: https://github.com/syskraken/krakenprime
-- Discord server: https://discord.gg/jV7ymDtH7F
 - Video tutorial: https://www.youtube.com/watch?v=3THrihH-oIM
 
 Price: Kraken Prime is free. If it has been useful, you can support the
@@ -39,6 +38,3 @@ developer with a donation (see the Donation page in the app):
 - GCash: 09271272799 (Franklin Tripole)
 - Contact email: nzeus624@gmail.com
 
-Privacy note: the app sends a tiny anonymous heartbeat (a random ID only, no
-personal data, no game data) so the developer can see how many installs are
-active. Privacy policy: https://kraken.protectiva.site/privacy
