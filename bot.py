@@ -228,8 +228,20 @@ class PoseidonBot(discord.Client):
     async def setup_hook(self):
         self.http_session = aiohttp.ClientSession()
         await self._start_health_server()
-        await self.tree.sync()
-        log.info("Slash commands synced.")
+        # Only sync slash commands when explicitly asked. Command definitions
+        # persist on Discord's side between restarts, so syncing on every boot
+        # is unnecessary and hammers Discord's most rate-limited endpoint —
+        # frequent restarts (e.g. Render recycling the free instance) can trip
+        # a global 429 that blocks the token. Set SYNC_COMMANDS=1 for one boot
+        # after you add or change a command, then remove it.
+        if os.environ.get("SYNC_COMMANDS", "").lower() in ("1", "true", "yes"):
+            try:
+                await self.tree.sync()
+                log.info("Slash commands synced.")
+            except Exception as e:
+                log.warning("Command sync failed (continuing anyway): %s", e)
+        else:
+            log.info("Skipping command sync (set SYNC_COMMANDS=1 to force a sync).")
 
     async def _start_health_server(self):
         """Tiny HTTP server so hosts like Render see an open port and
