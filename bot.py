@@ -9,6 +9,7 @@ import os
 import re
 import sys
 import math
+import asyncio
 import logging
 from pathlib import Path
 
@@ -227,7 +228,6 @@ class PoseidonBot(discord.Client):
 
     async def setup_hook(self):
         self.http_session = aiohttp.ClientSession()
-        await self._start_health_server()
         # Only sync slash commands when explicitly asked. Command definitions
         # persist on Discord's side between restarts, so syncing on every boot
         # is unnecessary and hammers Discord's most rate-limited endpoint —
@@ -243,29 +243,9 @@ class PoseidonBot(discord.Client):
         else:
             log.info("Skipping command sync (set SYNC_COMMANDS=1 to force a sync).")
 
-    async def _start_health_server(self):
-        """Tiny HTTP server so hosts like Render see an open port and
-        uptime pingers (GET/HEAD) can keep the service awake."""
-        async def health(request: web.Request) -> web.Response:
-            return web.Response(text="Poseidon is running.")
-
-        app = web.Application()
-        app.router.add_get("/", health)       # aiohttp answers HEAD for GET routes
-        app.router.add_get("/health", health)
-        port = int(os.environ.get("PORT", 8080))
-        self._web_runner = web.AppRunner(app)
-        await self._web_runner.setup()
-        try:
-            await web.TCPSite(self._web_runner, "0.0.0.0", port).start()
-            log.info("Health endpoint listening on port %d (GET/HEAD / and /health)", port)
-        except OSError as e:
-            log.warning("Could not start health server on port %d: %s", port, e)
-
     async def close(self):
         if self.http_session:
             await self.http_session.close()
-        if getattr(self, "_web_runner", None):
-            await self._web_runner.cleanup()
         await super().close()
 
     async def on_ready(self):
@@ -396,23 +376,75 @@ def build_commands(bot: PoseidonBot):
     tree.add_command(kb_group)
 
 
-def main():
-    for message_content in (True, False):
+async def start_health_server():
+    """Tiny HTTP server so hosts like Render see an open port and uptime
+    pingers (GET/HEAD) can keep the service awake. Started BEFORE the Discord
+    login so the deploy's port check passes and the process stays alive even
+    while Discord login is being retried — otherwise a login-time 429 would
+    exit the process and Render would crash-loop, hammering Discord's API and
+    keeping the rate-limit block alive."""
+    async def health(request: web.Request) -> web.Response:
+        return web.Response(text="Poseidon is running.")
+
+    app = web.Application()
+    app.router.add_get("/", health)       # aiohttp answers HEAD for GET routes
+    app.router.add_get("/health", health)
+    port = int(os.environ.get("PORT", 8080))
+    runner = web.AppRunner(app)
+    await runner.setup()
+    await web.TCPSite(runner, "0.0.0.0", port).start()
+    log.info("Health endpoint listening on port %d (GET/HEAD / and /health)", port)
+    return runner
+
+
+async def async_main():
+    # Bind the health port first so the platform's port check passes and the
+    # process stays up regardless of Discord's availability.
+    try:
+        await start_health_server()
+    except OSError as e:
+        log.warning("Could not start health server: %s", e)
+
+    # Message Content Intent is enabled for this app; keep it on for @mention
+    # answers. If it ever gets disabled, Discord raises PrivilegedIntentsRequired
+    # and we retry in slash-command-only mode.
+    message_content = True
+    backoff = 30
+    while True:
         bot = PoseidonBot(message_content=message_content)
         build_commands(bot)
         try:
-            bot.run(DISCORD_TOKEN)
+            await bot.start(DISCORD_TOKEN)
+            return  # start() returns only on a clean shutdown
+        except discord.LoginFailure:
+            log.error("Discord rejected the token. Check DISCORD_TOKEN — exiting.")
             return
         except discord.PrivilegedIntentsRequired:
-            print(
-                "\n[!] 'Message Content Intent' is not enabled for this bot.\n"
-                "    Mention-based answers need it. Enable it at\n"
-                "    https://discord.com/developers/applications -> your app -> Bot ->\n"
-                "    Privileged Gateway Intents -> MESSAGE CONTENT INTENT.\n"
-                "    Starting in slash-command-only mode (/ask still works)...\n")
-        except discord.LoginFailure:
-            print("[!] Discord rejected the token. Check DISCORD_TOKEN in .env.")
+            if message_content:
+                log.warning("Message Content Intent not enabled — retrying in "
+                            "slash-command-only mode.")
+                message_content = False
+                continue
+            log.error("Privileged intent still required — exiting.")
             return
+        except discord.HTTPException as e:
+            if e.status == 429:
+                log.warning("Discord rate-limited login (429). The token is "
+                            "temporarily blocked; retrying in %ds without "
+                            "crashing the process.", backoff)
+            else:
+                log.exception("Discord HTTP error on login; retrying in %ds.", backoff)
+        except Exception:
+            log.exception("Bot crashed; retrying in %ds.", backoff)
+        finally:
+            if not bot.is_closed():
+                await bot.close()
+        await asyncio.sleep(backoff)
+        backoff = min(backoff * 2, 900)  # cap at 15 min between attempts
+
+
+def main():
+    asyncio.run(async_main())
 
 
 if __name__ == "__main__":
